@@ -21,6 +21,20 @@ jobs:
       - uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Rebuild intro video
+        shell: bash
+        run: |
+          rm -f dist/assets/intro.mp4
+          touch dist/assets/intro.mp4
+          for i in $(seq 0 62); do
+            n=$(printf "%02d" "$i")
+            if [ "$i" = "0" ] || [ "$i" = "57" ] || [ "$i" = "58" ]; then
+              for j in $(seq 0 4); do cat "dist/assets/intro/chunk${n}_${j}.bin" >> dist/assets/intro.mp4; done
+            else
+              cat "dist/assets/intro/chunk${n}.bin" >> dist/assets/intro.mp4
+            fi
+          done
+          test "$(stat -c%s dist/assets/intro.mp4)" = "15501469"
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
