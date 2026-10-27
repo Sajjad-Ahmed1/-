@@ -4,7 +4,7 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 concurrency:
@@ -35,6 +35,17 @@ jobs:
             fi
           done
           test "$(stat -c%s dist/assets/welcome.mp4)" = "15501469"
+          echo "9aa61983de3adc08f27bc438776eb7903ea84c135743ef80a60655689b5410f9  dist/assets/welcome.mp4" | sha256sum -c -
+      - name: Save streamable video in repository
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f dist/assets/welcome.mp4
+          if ! git diff --cached --quiet; then
+            git commit -m "Add streamable welcome video"
+            git push
+          fi
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
