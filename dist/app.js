@@ -30,7 +30,7 @@ async function openVideo(key){
  document.querySelector('#video-title').textContent=key==='art'?'ألوان من البازار':'حكاية بازار ميسان الثقافي';
  vd.showModal();document.body.classList.add('modal-open');
  if(key==='intro'){
-  player.src='assets/intro.mp4?v=5';
+  player.src='assets/welcome.mp4?v=6';
   player.load();
   player.play().catch(()=>{});
   return;
