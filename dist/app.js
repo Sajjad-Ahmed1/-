@@ -26,8 +26,13 @@ async function openVideo(key){
  if(videoUrl){URL.revokeObjectURL(videoUrl);videoUrl=undefined}
  if(key==='intro'){
   try{
-   const pieces=await Promise.all(Array.from({length:63},(_,i)=>i).map(async i=>{
-    const response=await fetch('assets/intro/chunk'+String(i).padStart(2,'0')+'.bin');
+   const chunkPaths=[];
+   for(let i=0;i<63;i++){
+    if(i===0||i===57||i===58)for(let j=0;j<5;j++)chunkPaths.push('assets/intro/chunk'+String(i).padStart(2,'0')+'_'+j+'.bin');
+    else chunkPaths.push('assets/intro/chunk'+String(i).padStart(2,'0')+'.bin');
+   }
+   const pieces=await Promise.all(chunkPaths.map(async path=>{
+    const response=await fetch(path);
     if(!response.ok)throw new Error('Video part missing');
     return response.arrayBuffer();
    }));
