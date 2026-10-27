@@ -26,8 +26,8 @@ async function openVideo(key){
  if(videoUrl){URL.revokeObjectURL(videoUrl);videoUrl=undefined}
  if(key==='intro'){
   try{
-   const pieces=await Promise.all([0,1,2,3].map(async i=>{
-    const response=await fetch('assets/intro.part'+i);
+   const pieces=await Promise.all(Array.from({length:63},(_,i)=>i).map(async i=>{
+    const response=await fetch('assets/intro/chunk'+String(i).padStart(2,'0')+'.bin');
     if(!response.ok)throw new Error('Video part missing');
     return response.arrayBuffer();
    }));
