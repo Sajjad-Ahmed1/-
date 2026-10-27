@@ -15,17 +15,30 @@ document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListen
  });
 }));
 const projects={haider:{name:'حيدر الرسام',image:'haider',description:'رسام تشكيلي يشارك في البازار بالرسم على الوجوه واللوحات المصغرة. ألوان تتحول إلى تجربة يتذكرها الصغار بابتسامة.',video:'art'},sarai:{name:'مكتبة السراي',image:'sarai',description:'إحدى مكتبات بازار ميسان الثقافي. تعرّف على المكتبة واكتشف عناوينها عند مشاركتها في فعاليات البازار.'},shanashil:{name:'مكتبة شناشيل',image:'shanashil',description:'من المكتبات التي يجمعها بازار ميسان الثقافي بالقرّاء. مساحة لاكتشاف الكتب والحديث عنها، واللقاء بأهلها.'},tswahn:{name:'مكتبة تسواهن',image:'tswahn',description:'مكتبة مشاركة في حكاية البازار. يمكنك التواصل معها مباشرة للاستفسار عن الكتب والعناوين المتوفرة.',links:[['واتساب المكتبة','https://wa.me/9647515767117'],['حساب إنستغرام','https://www.instagram.com/bookstore.tswahn/']]}};
+Object.assign(projects,{
+ haider:{name:'حيدر الرسام',image:'haider',description:'حيدر الرسام يضيف الألوان والفرح إلى تجربة الأطفال داخل البازار.',video:'art'},
+ sarai:{name:'مكتبة السراي',image:'sarai',description:'مكتبة السراي، مساحة للقرّاء وبداية لحكاية جديدة.',links:[['حساب إنستغرام','https://www.instagram.com/alsaray_library/']]},
+ shanashil:{name:'مكتبة شناشيل',image:'shanashil',description:'ميسان، العمارة، قطاع 30، مجاور مطعم الجندول.',links:[['اتصال بالمكتبة','tel:07764445002'],['صفحة المكتبة','https://www.facebook.com/100080801284722/']]},
+ tswahn:{name:'مكتبة تسواهن',image:'tswahn',description:'مكتبة محلية تجمع القرّاء حول الكتب والإصدارات.',links:[['اتصال بالمكتبة','https://wa.me/9647515767117'],['حساب إنستغرام','https://www.instagram.com/bookstore.tswahn/']]}
+});
 const pd=document.querySelector('#project-dialog'),vd=document.querySelector('#video-dialog'),player=vd.querySelector('video');
 document.querySelectorAll('[data-project]').forEach(button=>button.addEventListener('click',()=>{const p=projects[button.dataset.project];const content=document.querySelector('#project-content');content.replaceChildren();const img=document.createElement('img');img.src='assets/'+p.image+'.webp';img.alt='شعار '+p.name;const h=document.createElement('h2');h.textContent=p.name;const desc=document.createElement('p');desc.textContent=p.description;content.append(img,h,desc);const actions=document.createElement('div');actions.className='dialog-actions';(p.links||[]).forEach(([label,url])=>{const a=document.createElement('a');a.textContent=label+' ↗';a.href=url;a.target='_blank';a.rel='noopener';a.className='button primary';actions.append(a)});if(p.video){const v=document.createElement('button');v.className='button primary';v.textContent='شاهد حيدر أثناء الرسم ▶';v.addEventListener('click',()=>{pd.close();openVideo(p.video)});actions.append(v)}content.append(actions);pd.showModal();document.body.classList.add('modal-open')}));
-let videoUrl,videoRequest=0;
+let videoUrl,introVideoUrl,videoRequest=0;
 async function openVideo(key){
  const request=++videoRequest;
  player.poster='assets/'+(key==='art'?'artist':'intro')+'.webp';
  document.querySelector('#video-title').textContent=key==='art'?'ألوان من البازار':'حكاية بازار ميسان الثقافي';
  vd.showModal();document.body.classList.add('modal-open');
- if(videoUrl){URL.revokeObjectURL(videoUrl);videoUrl=undefined}
  if(key==='intro'){
   try{
+   document.querySelector('#video-title').textContent='جاري تحميل فيديو الترحيب...';
+   if(introVideoUrl){
+    player.src=introVideoUrl;
+    player.load();
+    document.querySelector('#video-title').textContent='حكاية بازار ميسان';
+    player.play().catch(()=>{});
+    return;
+   }
    const chunkPaths=[];
    for(let i=0;i<63;i++){
     if(i===0||i===57||i===58)for(let j=0;j<5;j++)chunkPaths.push('assets/intro/chunk'+String(i).padStart(2,'0')+'_'+j+'.bin');
@@ -37,13 +50,16 @@ async function openVideo(key){
     return response.arrayBuffer();
    }));
    if(request!==videoRequest||!vd.open)return;
-   videoUrl=URL.createObjectURL(new Blob(pieces,{type:'video/mp4'}));
-   player.src=videoUrl;
+   introVideoUrl=URL.createObjectURL(new Blob(pieces,{type:'video/mp4'}));
+   videoUrl=introVideoUrl;
+   player.src=introVideoUrl;
+   player.load();
+   document.querySelector('#video-title').textContent='حكاية بازار ميسان';
   }catch(error){if(request===videoRequest)document.querySelector('#video-title').textContent='تعذّر تحميل الفيديو، حاول مرة ثانية';return}
  }else player.src='assets/art.mp4';
  player.play().catch(()=>{});
 }
 document.querySelectorAll('[data-video]').forEach(b=>b.addEventListener('click',()=>openVideo(b.dataset.video)));
-[pd,vd].forEach(dialog=>{dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{if(dialog===vd){videoRequest++;player.pause();player.removeAttribute('src');player.load();if(videoUrl){URL.revokeObjectURL(videoUrl);videoUrl=undefined}}if(!pd.open&&!vd.open)document.body.classList.remove('modal-open')})});
+[pd,vd].forEach(dialog=>{dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{if(dialog===vd){videoRequest++;player.pause();player.removeAttribute('src');player.load();videoUrl=undefined}if(!pd.open&&!vd.open)document.body.classList.remove('modal-open')})});
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
 

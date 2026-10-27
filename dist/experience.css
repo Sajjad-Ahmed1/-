@@ -148,3 +148,50 @@
 .project-card:after{border-top-color:var(--project-accent)}
 @media(hover:hover) and (prefers-reduced-motion:no-preference){.project-card:hover{background:#fffdf8;box-shadow:0 20px 42px #123f5714;transform:translateY(-4px)}}
 @media(max-width:760px){.project-card{min-height:0}.project-card:before{top:14px;left:15px}}
+
+/* Market collections: food, handmade work and direct creator accounts. */
+.market-collections{padding:130px 0;background:#f1eee5;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.collection-heading{margin-bottom:64px}
+.collection-heading>p{max-width:390px}
+.collection-block{display:grid;grid-template-columns:.42fr 1fr;gap:55px;padding:44px 0;border-top:1px solid #ccd0c7}
+.collection-title{display:flex;gap:22px;align-items:flex-start}
+.collection-number{font-size:11px;color:var(--gold);padding-top:7px}
+.collection-title small{display:block;color:var(--muted);font-size:11px;margin-bottom:8px}
+.collection-title h3{font-size:23px;line-height:1.55;font-weight:600}
+.maker-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.maker-grid:has(.maker-card:only-child){grid-template-columns:minmax(0,.68fr)}
+.maker-card{background:#f8f6ef;border:1px solid #d7d8cf;padding:10px;transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
+.maker-visual{height:250px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;position:relative}
+.maker-visual:after{content:'';position:absolute;width:190px;height:190px;border:1px solid currentColor;border-radius:48% 52% 42% 58%;opacity:.14;left:-45px;bottom:-70px;transform:rotate(22deg)}
+.maker-food .maker-visual{background:#dcc8ad;color:#643f2c}
+.maker-candle .maker-visual{background:#cad5cf;color:#244c46}
+.maker-cha .maker-visual{background:#d1c7d4;color:#49384d}
+.maker-monogram{font-size:74px;line-height:1;font-weight:600;align-self:flex-end}
+.maker-visual small{font-size:11px;letter-spacing:.04em}
+.maker-info{display:flex;align-items:center;justify-content:space-between;padding:19px 10px 9px}
+.maker-info>div{display:flex;flex-direction:column;gap:5px}
+.maker-info span{font-size:17px;font-weight:600}
+.maker-info small{font-size:11px;color:var(--muted);direction:ltr;text-align:right}
+.maker-info i{font-style:normal;width:38px;height:38px;border:1px solid #aeb8b3;border-radius:50%;display:grid;place-items:center;font-size:18px}
+.maker-card:hover{transform:translateY(-7px);box-shadow:0 23px 48px #123f5717}
+.designer-credit{padding-block:95px;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:80px;border-bottom:1px solid var(--line)}
+.designer-copy>span{display:block;font-size:11px;color:var(--muted);margin-bottom:18px}
+.designer-copy h2{font-size:clamp(34px,3.8vw,56px)}
+.designer-profile{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;padding:24px;border:1px solid #cbd0c8;background:#f2f0e8;transition:background .3s,transform .3s}
+.designer-profile:hover{background:white;transform:translateY(-4px)}
+.designer-mark{width:66px;height:66px;border-radius:50%;background:var(--navy);color:#f6f4ed;display:grid;place-items:center;font-size:19px;letter-spacing:.08em}
+.designer-profile>span:nth-child(2){display:flex;flex-direction:column;gap:6px}
+.designer-profile strong{font-size:17px}
+.designer-profile small{font-size:11px;color:var(--muted);direction:ltr;text-align:right}
+.designer-profile i{font-style:normal;font-size:23px;color:var(--gold)}
+@media(max-width:760px){
+  .market-collections{padding:80px 0}
+  .collection-heading{margin-bottom:38px}
+  .collection-block{grid-template-columns:1fr;gap:25px;padding:34px 0}
+  .maker-grid,.maker-grid:has(.maker-card:only-child){grid-template-columns:1fr}
+  .maker-visual{height:220px}
+  .designer-credit{grid-template-columns:1fr;gap:36px;padding-block:68px}
+  .designer-profile{padding:17px;gap:14px}
+  .designer-mark{width:54px;height:54px}
+  .designer-profile strong{font-size:15px}
+}
