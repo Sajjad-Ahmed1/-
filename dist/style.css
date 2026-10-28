@@ -10,6 +10,6 @@
 .marquee-group{display:flex;direction:rtl;align-items:center;justify-content:space-around;flex-shrink:0;min-width:100vw;gap:45px;padding-inline:22.5px}
 .marquee-group span{white-space:nowrap}
 .category-band:hover .marquee-track,.category-band:focus-within .marquee-track{animation-play-state:paused}
-@keyframes activities-scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes activities-scroll{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(max-width:760px){.category-band{padding:17px 0}.marquee-group{gap:28px;padding-inline:14px}.marquee-track{animation-duration:25s}}
 @media(prefers-reduced-motion:reduce){.category-band{overflow-x:auto}.marquee-track{animation:none;transform:none}.marquee-group[aria-hidden="true"]{display:none}}
