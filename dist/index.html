@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/bazaar-logo-new.png">
 <link rel="preload" href="assets/arabic-regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="experience.css?v=5">
+<link rel="stylesheet" href="experience.css?v=7">
 </head>
 <body>
 <div class="reading-progress" aria-hidden="true">
@@ -128,28 +128,6 @@
 </div>
 </div>
 </div>
-<section id="story" class="story section-wrap">
-<div class="story-copy">
-<div class="section-label">حكاية البازار</div>
-<h2>على ضفاف دجلة،<br>تزهر حكاياتنا.</h2>
-<p class="lead">نهر يجمع ضفتين.<br>وبازار يجمع أهل المدينة.</p>
-<p>من كورنيش العمارة إلى مساحات ميسان، تلتقي الكتب والفنون والمشاريع المحلية. وراء كل عمل وجه تعرفه، وحكاية تستحق أن تقترب منها.</p>
-<a class="underlined" href="#projects">تعرّف على أهل البازار <span>←</span>
-</a>
-</div>
-<figure class="river-photo">
-<div class="river-image-wrap">
-<img id="river-image" src="https://www.al-mayar.com/wp-content/uploads/2021/05/upload_1620398130_982553092.jpg" alt="كورنيش دجلة في مدينة العمارة" loading="lazy" referrerpolicy="no-referrer">
-<span class="river-location">العمارة<br>
-<b>على ضفاف دجلة</b>
-</span>
-</div>
-<figcaption id="river-credit">
-<span>من ملامح مدينتنا</span>
-<a href="https://www.al-mayar.com/بالصور-شارع-الكورنيش-لوحة-جمالية-لمدي/" target="_blank" rel="noopener">تصوير: عبدالحسين بريسم · واع / الميار ↗</a>
-</figcaption>
-</figure>
-</section>
 <section id="projects" class="projects">
 <div class="section-wrap">
 <div class="section-label">تعرّف عليهم</div>
@@ -159,15 +137,17 @@
 <em>تستاهل تعرفها.</em>
 </h2>
 </div>
-<p>تصفّح المشاريع، تعرّف على أصحابها،<br>واكتشف شغفهم عن قرب.</p>
+<p>تصفّح المواهب والمكتبات والأكلات والأعمال اليدوية، وتعرّف على أصحابها،<br>واكتشف شغفهم عن قرب.</p>
 </div>
 <div class="filters" role="group" aria-label="تصفية المشاريع">
-<button class="active" data-filter="all" aria-pressed="true">كل المشاريع <span>04</span>
+<button class="active" data-filter="all" aria-pressed="true">كل المشاريع <span>07</span>
 </button>
 <button data-filter="books" aria-pressed="false">المكتبات <span>03</span>
 </button>
 <button data-filter="art" aria-pressed="false">الفنون والرسم <span>01</span>
 </button>
+<button data-filter="food" aria-pressed="false">الأكل والحلويات <span>01</span></button>
+<button data-filter="handmade" aria-pressed="false">الأعمال اليدوية <span>02</span></button>
 </div>
 <div class="project-grid" aria-live="polite">
 <button class="project-card" data-category="art" data-project="haider">
@@ -218,41 +198,42 @@
 </div>
 <p>مكتبة تسواهن · @bookstore.tswahn</p>
 </button>
+<a class="project-card maker-project" data-category="food" href="https://www.instagram.com/sweet558811/" target="_blank" rel="noopener">
+<div class="card-image logo-image maker-preview maker-food"><img src="assets/sweet-logo.png" alt="شعار عجينة سويت" loading="lazy"><span class="card-category">أكلات وحلويات</span><span class="card-arrow">↗</span></div>
+<div class="card-title"><h3>عجينة سويت</h3><span>05</span></div><p>حلويات ومخبوزات · @sweet558811</p></a>
+<a class="project-card maker-project" data-category="handmade" href="https://www.instagram.com/alwed_candles/" target="_blank" rel="noopener">
+<div class="card-image logo-image maker-preview maker-candle"><img src="assets/alwed-logo.png" alt="شعار Alwed Candles" loading="lazy"><span class="card-category">أعمال يدوية</span><span class="card-arrow">↗</span></div>
+<div class="card-title"><h3>Alwed Candles</h3><span>06</span></div><p>شموع وتفاصيل منزلية · @alwed_candles</p></a>
+<a class="project-card maker-project" data-category="handmade" href="https://www.instagram.com/1_.cha/" target="_blank" rel="noopener">
+<div class="card-image logo-image maker-preview maker-cha"><img src="assets/cha-logo.jpg" alt="شعار چا" loading="lazy"><span class="card-category">أعمال يدوية</span><span class="card-arrow">↗</span></div>
+<div class="card-title"><h3>چا</h3><span>07</span></div><p>مشروع إبداعي مشارك · @1_.cha</p></a>
+
 </div>
 <p class="projects-foot">كل اسم هنا، جزء من حكاية البازار. <span>✦</span>
 </p>
 </div>
 </section>
-<section id="market-collections" class="market-collections">
-  <div class="section-wrap">
-    <div class="section-label">من البازار إلى بيتكم</div>
-    <div class="section-heading collection-heading">
-      <div><h2>نكهات مصنوعة بحب.<br><em>وتفاصيل صنعتها الأيادي.</em></h2></div>
-      <p>تعرّفوا على مشاريع المشاركين، وادعموا المواهب المحلية من خلال حساباتهم الرسمية.</p>
-    </div>
-    <div class="collection-block" id="food">
-      <div class="collection-title"><span class="collection-number">01</span><div><small>أكلات وحلويات</small><h3>طعم ميسان بلمسة بيتية</h3></div></div>
-      <div class="maker-grid">
-        <a class="maker-card maker-food" href="https://www.instagram.com/sweet558811?obrf=MWNlMTkxcnBwNDhsNw==" target="_blank" rel="noopener">
-          <div class="maker-visual"><img class="maker-logo" src="assets/sweet-logo.png" alt="شعار عجينة سويت"><small>حلويات · مخبوزات</small></div>
-          <div class="maker-info"><div><span>عجينة سويت</span><small>@sweet558811</small></div><i>↗</i></div>
-        </a>
-      </div>
-    </div>
-    <div class="collection-block handmade-block" id="handmade">
-      <div class="collection-title"><span class="collection-number">02</span><div><small>أعمال يدوية</small><h3>قطع تحمل أثر صانعها</h3></div></div>
-      <div class="maker-grid">
-        <a class="maker-card maker-candle" href="https://www.instagram.com/alwed_candles?mdxt=MTkzbWxiNnFyNDEydQ==" target="_blank" rel="noopener">
-          <div class="maker-visual"><img class="maker-logo" src="assets/alwed-logo.png" alt="شعار Alwed Candles"><small>شموع · تفاصيل منزلية</small></div>
-          <div class="maker-info"><div><span>Alwed Candles</span><small>@alwed_candles</small></div><i>↗</i></div>
-        </a>
-        <a class="maker-card maker-cha" href="https://www.instagram.com/1_.cha?rpxt=a2phMm1wdXo0bnJ2" target="_blank" rel="noopener">
-          <div class="maker-visual"><img class="maker-logo" src="assets/cha-logo.jpg" alt="شعار چا"><small>مشروع إبداعي مشارك</small></div>
-          <div class="maker-info"><div><span>چا</span><small>@1_.cha</small></div><i>↗</i></div>
-        </a>
-      </div>
-    </div>
-  </div>
+<section id="story" class="story section-wrap">
+<div class="story-copy">
+<div class="section-label">حكاية البازار</div>
+<h2>على ضفاف دجلة،<br>تزهر حكاياتنا.</h2>
+<p class="lead">نهر يجمع ضفتين.<br>وبازار يجمع أهل المدينة.</p>
+<p>من كورنيش العمارة إلى مساحات ميسان، تلتقي الكتب والفنون والمشاريع المحلية. وراء كل عمل وجه تعرفه، وحكاية تستحق أن تقترب منها.</p>
+<a class="underlined" href="#projects">تعرّف على أهل البازار <span>←</span>
+</a>
+</div>
+<figure class="river-photo">
+<div class="river-image-wrap">
+<img id="river-image" src="https://www.al-mayar.com/wp-content/uploads/2021/05/upload_1620398130_982553092.jpg" alt="كورنيش دجلة في مدينة العمارة" loading="lazy" referrerpolicy="no-referrer">
+<span class="river-location">العمارة<br>
+<b>على ضفاف دجلة</b>
+</span>
+</div>
+<figcaption id="river-credit">
+<span>من ملامح مدينتنا</span>
+<a href="https://www.al-mayar.com/بالصور-شارع-الكورنيش-لوحة-جمالية-لمدي/" target="_blank" rel="noopener">تصوير: عبدالحسين بريسم · واع / الميار ↗</a>
+</figcaption>
+</figure>
 </section>
 <section id="moments" class="moments section-wrap">
 <div class="section-label">ألبوم البازار <span class="moments-count">01 / 03</span>
@@ -414,7 +395,7 @@
 <video controls playsinline preload="none">
 </video>
 </dialog>
-<script src="app.js?v=6">
+<script src="app.js?v=7">
 </script>
 <script src="experience.js?v=3">
 </script>
