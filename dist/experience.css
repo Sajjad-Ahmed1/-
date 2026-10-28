@@ -322,3 +322,33 @@
  .album-video-trigger{inset:6px 6px 33px}
  .album .video-badge{padding:9px 11px;font-size:10px;gap:6px}
 }
+
+/* Compact section transition and persistent video controls. */
+.editorial-hero{min-height:0;padding-bottom:12px;row-gap:12px}
+.hero-bottom{margin-top:12px;padding-top:14px}
+.cinema{height:auto;min-height:0;padding:22px 0 40px}
+.cinema-sticky{position:relative;top:auto;height:auto;min-height:0;gap:22px}
+.cinema-frame{transform:none}
+.video-badge{background:none;border:0;box-shadow:none;padding:0;display:flex;flex-direction:column;gap:6px;color:white}
+.video-play-icon{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#123f57ed;color:#fff;border:2px solid #ffffffeb;box-shadow:0 4px 20px #001d3050}
+.video-label{font-size:11px!important;background:#123f57ed;border-radius:12px;padding:3px 10px;line-height:1.5}
+.album-left .video-badge{left:12px;right:auto;top:15px;transform:none}
+.album-right .video-badge{right:12px;left:auto;top:15px;transform:none}
+.album-left .video-play-icon,.album-right .video-play-icon{width:40px;height:40px}
+.album-video-trigger:hover .video-badge{background:none}
+.album-video-trigger:hover .video-play-icon{background:var(--gold)}
+.film-play .video-play-icon{width:48px;height:48px;border-bottom:2px solid white;padding:0;flex-shrink:0}
+@media(max-width:760px){
+ .editorial-hero{padding-bottom:8px;row-gap:10px}
+ .hero-bottom{margin-top:4px}
+ .cinema{padding:16px 0 32px}
+ .cinema-sticky{gap:18px}
+ .cinema-heading{line-height:1.6}
+ .album .video-badge{padding:0;gap:4px}
+ .album-left .video-badge{left:5px;top:10px}
+ .album-right .video-badge{right:5px;top:10px}
+ .album-left .video-play-icon,.album-right .video-play-icon{width:34px;height:34px}
+ .album-left .video-label,.album-right .video-label{font-size:9px!important;padding:2px 7px}
+}
+
+body{overflow-x:clip}
