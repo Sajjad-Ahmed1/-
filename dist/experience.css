@@ -224,3 +224,8 @@
 .maker-preview.maker-candle{background:#cad5cf}
 .maker-preview.maker-cha{background:#d1c7d4}
 @media(max-width:440px){.project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.maker-preview img{width:76%!important}.project-card .card-title h3{font-size:clamp(13px,3.5vw,17px)}}
+
+/* Designer and collaborator accounts, separate from the projects gallery. */
+@media(min-width:1000px){.designer-credit{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:center}.designer-profile{gap:12px;padding:16px}.designer-profile strong{font-size:14px}.designer-profile small{font-size:10px}.designer-mark{width:52px;height:52px;flex-shrink:0}.designer-copy h2{font-size:clamp(30px,3vw,45px)}}
+@media(min-width:761px) and (max-width:999px){.designer-credit{grid-template-columns:1fr 1fr;gap:20px}.designer-copy{grid-row:1/3}.designer-profile{grid-column:2}}
+@media(max-width:760px){.designer-credit{grid-template-columns:minmax(0,1fr)}.designer-copy,.designer-profile{grid-column:auto;grid-row:auto}.designer-profile+.designer-profile{margin-top:-18px}}
