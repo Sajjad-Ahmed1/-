@@ -23,49 +23,48 @@ Object.assign(projects,{
 });
 const pd=document.querySelector('#project-dialog'),vd=document.querySelector('#video-dialog'),player=vd.querySelector('video');
 document.querySelectorAll('[data-project]').forEach(button=>button.addEventListener('click',()=>{const p=projects[button.dataset.project];const content=document.querySelector('#project-content');content.replaceChildren();const img=document.createElement('img');img.src='assets/'+p.image+'.webp';img.alt='شعار '+p.name;const h=document.createElement('h2');h.textContent=p.name;const desc=document.createElement('p');desc.textContent=p.description;content.append(img,h,desc);const actions=document.createElement('div');actions.className='dialog-actions';(p.links||[]).forEach(([label,url])=>{const a=document.createElement('a');a.textContent=label+' ↗';a.href=url;a.target='_blank';a.rel='noopener';a.className='button primary';actions.append(a)});if(p.video){const v=document.createElement('button');v.className='button primary';v.textContent='شاهد حيدر أثناء الرسم ▶';v.addEventListener('click',()=>{pd.close();openVideo(p.video)});actions.append(v)}content.append(actions);pd.showModal();document.body.classList.add('modal-open')}));
-let videoUrl,introVideoUrl,videoRequest=0;
-async function openVideo(key){
- const request=++videoRequest;
- player.poster='assets/'+(key==='art'?'artist':'intro')+'.webp';
- document.querySelector('#video-title').textContent=key==='art'?'ألوان من البازار':'حكاية بازار ميسان الثقافي';
- vd.showModal();document.body.classList.add('modal-open');
- if(key==='intro'){
-  player.src='assets/welcome.mp4?v=6';
-  player.load();
-  player.play().catch(()=>{});
-  return;
- }
- if(key==='intro'){
-  try{
-   document.querySelector('#video-title').textContent='جاري تحميل فيديو الترحيب...';
-   if(introVideoUrl){
-    player.src=introVideoUrl;
-    player.load();
-    document.querySelector('#video-title').textContent='حكاية بازار ميسان';
-    player.play().catch(()=>{});
-    return;
-   }
-   const chunkPaths=[];
-   for(let i=0;i<63;i++){
-    if(i===0||i===57||i===58)for(let j=0;j<5;j++)chunkPaths.push('assets/intro/chunk'+String(i).padStart(2,'0')+'_'+j+'.bin');
-    else chunkPaths.push('assets/intro/chunk'+String(i).padStart(2,'0')+'.bin');
-   }
-   const pieces=await Promise.all(chunkPaths.map(async path=>{
-    const response=await fetch(path);
-    if(!response.ok)throw new Error('Video part missing');
-    return response.arrayBuffer();
-   }));
-   if(request!==videoRequest||!vd.open)return;
-   introVideoUrl=URL.createObjectURL(new Blob(pieces,{type:'video/mp4'}));
-   videoUrl=introVideoUrl;
-   player.src=introVideoUrl;
-   player.load();
-   document.querySelector('#video-title').textContent='حكاية بازار ميسان';
-  }catch(error){if(request===videoRequest)document.querySelector('#video-title').textContent='تعذّر تحميل الفيديو، حاول مرة ثانية';return}
- }else player.src='assets/art.mp4';
- player.play().catch(()=>{});
+let videoRequest=0, videoTimer, activeVideo='intro';
+const videoStatus=document.querySelector('#video-status');
+const videoRetry=document.querySelector('#video-retry');
+const videoDirect=document.querySelector('#video-direct');
+function reportVideo(message,retry=false){
+ videoStatus.textContent=message;
+ videoRetry.hidden=!retry;
 }
+function startPlayback(){
+ const request=videoRequest;
+ const play=player.play();
+ if(play)play.catch(error=>{
+  if(request!==videoRequest||!vd.open||error.name==='AbortError')return;
+  reportVideo(error.name==='NotAllowedError'?'اضغط زر التشغيل داخل الفيديو للبدء.':'تعذّر بدء الفيديو. جرّب مرة ثانية أو افتحه مباشرة.',true);
+ });
+}
+function openVideo(key){
+ activeVideo=key==='art'?'art':'intro';
+ ++videoRequest;
+ clearTimeout(videoTimer);
+ player.pause();
+ player.poster='assets/'+(activeVideo==='art'?'artist':'intro')+'.webp';
+ document.querySelector('#video-title').textContent=activeVideo==='art'?'ألوان من البازار':'حكاية بازار ميسان الثقافي';
+ player.src=new URL('assets/'+(activeVideo==='art'?'art-play':'welcome-play')+'.mp4?v=15',document.baseURI).href;
+ videoDirect.href=player.src;
+ reportVideo('جاري تحميل الفيديو…');
+ if(!vd.open)vd.showModal();
+ document.body.classList.add('modal-open');
+ player.load();
+ startPlayback();
+ videoTimer=setTimeout(()=>{
+  if(vd.open&&player.readyState<3)reportVideo('التحميل أخذ وقت أطول؛ تگدر تعيد المحاولة أو تفتح الفيديو مباشرة.',true);
+ },12000);
+}
+player.addEventListener('playing',()=>{clearTimeout(videoTimer);reportVideo('')});
+player.addEventListener('error',()=>{
+ if(!vd.open||!player.hasAttribute('src'))return;
+ clearTimeout(videoTimer);
+ reportVideo('تعذّر تحميل الفيديو. جرّب إعادة المحاولة أو فتحه مباشرة.',true);
+});
+videoRetry.addEventListener('click',()=>openVideo(activeVideo));
 document.querySelectorAll('[data-video]').forEach(b=>b.addEventListener('click',()=>openVideo(b.dataset.video)));
-[pd,vd].forEach(dialog=>{dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{if(dialog===vd){videoRequest++;player.pause();player.removeAttribute('src');player.load();videoUrl=undefined}if(!pd.open&&!vd.open)document.body.classList.remove('modal-open')})});
+[pd,vd].forEach(dialog=>{dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close()}});dialog.addEventListener('close',()=>{if(dialog===vd){videoRequest++;player.pause();player.removeAttribute('src');player.load();clearTimeout(videoTimer);reportVideo('')}if(!pd.open&&!vd.open)document.body.classList.remove('modal-open')})});
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-motion');const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.08});document.querySelectorAll('.reveal').forEach(el=>observer.observe(el))}
 
