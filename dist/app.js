@@ -34,9 +34,13 @@ function reportVideo(message,retry=false){
 function startPlayback(){
  const request=videoRequest;
  const play=player.play();
- if(play)play.catch(error=>{
+ if(play)play.catch(async error=>{
   if(request!==videoRequest||!vd.open||error.name==='AbortError')return;
-  reportVideo(error.name==='NotAllowedError'?'اضغط زر التشغيل داخل الفيديو للبدء.':'تعذّر بدء الفيديو. جرّب مرة ثانية أو افتحه مباشرة.',true);
+  if(error.name==='NotAllowedError'){
+   player.muted=true;
+   try{await player.play();reportVideo('الفيديو يعمل بدون صوت؛ فعّل الصوت من أزرار المشغّل.');return;}catch{}
+  }
+  reportVideo('اضغط إعادة المحاولة أو زر التشغيل داخل الفيديو.',true);
  });
 }
 function openVideo(key){
@@ -46,7 +50,7 @@ function openVideo(key){
  player.pause();
  player.poster='assets/'+(activeVideo==='art'?'artist':'intro')+'.webp';
  document.querySelector('#video-title').textContent=activeVideo==='art'?'ألوان من البازار':'حكاية بازار ميسان الثقافي';
- player.src=new URL('assets/'+(activeVideo==='art'?'art-play':'welcome-play')+'.mp4?v=15',document.baseURI).href;
+ player.src=new URL('assets/'+(activeVideo==='art'?'art-play':'welcome-play')+'.mp4?v=16',document.baseURI).href;
  videoDirect.href=player.src;
  reportVideo('جاري تحميل الفيديو…');
  if(!vd.open)vd.showModal();
