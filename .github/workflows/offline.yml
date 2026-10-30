@@ -1,0 +1,42 @@
+name: Package offline mobile demo
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/build-offline.cjs', 'tests/offline.cjs', '.github/workflows/offline.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: offline-demo
+  cancel-in-progress: true
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare compact embedded videos
+        run: |
+          if ! command -v ffmpeg >/dev/null; then sudo apt-get update -qq && sudo apt-get install -y ffmpeg; fi
+          mkdir -p offline-media
+          for source in welcome art; do
+            ffmpeg -hide_banner -loglevel error -y -i "dist/assets/${source}-play.mp4" -vf "scale=-2:720" -c:v libx264 -preset fast -crf 28 -pix_fmt yuv420p -c:a aac -b:a 96k -movflags +faststart "offline-media/${source}-play.mp4"
+          done
+      - name: Bundle single HTML
+        run: node scripts/build-offline.cjs
+      - name: Install test browser
+        run: |
+          npm install --prefix "$RUNNER_TEMP/browser-check" playwright
+          "$RUNNER_TEMP/browser-check/node_modules/.bin/playwright" install --with-deps chromium
+      - name: Verify with internet disabled
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/browser-check/node_modules/playwright
+        run: node tests/offline.cjs
+      - name: Package and publish downloadable files
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd offline-export
+          zip -9 Bazaar-Maysan-Offline.zip Bazaar-Maysan-Offline.html READ-ME.txt
+          TAG="offline-demo-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "Bazaar Maysan - Offline Demo" --notes "Single HTML with embedded images, fonts and videos. Tested with network disabled. External social and map links require internet. Open in a browser supporting local HTML and JavaScript." Bazaar-Maysan-Offline.html Bazaar-Maysan-Offline.zip
