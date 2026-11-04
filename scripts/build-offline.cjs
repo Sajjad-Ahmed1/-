@@ -10,6 +10,7 @@ for(const name of ['welcome-play.mp4','art-play.mp4'])assets['assets/'+name]='da
 function asset(p){const r=assets[p.split('?')[0]];if(!r)throw Error('Missing '+p);return r;}
 let html=read('index.html');
 html=html.replaceAll('Alwed Candles','شموع الود');
+html=html.replace('خلّ نمشي','خل نمشي').replace('صُمم لميسان،','تصميم لميسان،');
 html=html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g,tag=>{
  const filename=tag.match(/href="([^"]+)"/)[1].split('?')[0];
  return '<style>'+read(filename).replace(/url\(['"]?(assets\/[^)'"]+)['"]?\)/g,(_,p)=>'url("'+asset(p)+'")')+'</style>';
