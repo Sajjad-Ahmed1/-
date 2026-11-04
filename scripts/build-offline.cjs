@@ -9,6 +9,7 @@ for(const name of fs.readdirSync('dist/assets')){
 for(const name of ['welcome-play.mp4','art-play.mp4'])assets['assets/'+name]='data:video/mp4;base64,'+fs.readFileSync('offline-media/'+name).toString('base64');
 function asset(p){const r=assets[p.split('?')[0]];if(!r)throw Error('Missing '+p);return r;}
 let html=read('index.html');
+if(!html.includes('id="contact"')||!html.includes('href="#contact"'))throw Error('Contact section or navigation link is missing');
 html=html.replaceAll('Alwed Candles','شموع الود');
 html=html.replace('خلّ نمشي','خل نمشي').replace('صُمم لميسان،','تصميم لميسان،');
 html=html.replace(/<link\b[^>]*rel="stylesheet"[^>]*>/g,tag=>{
