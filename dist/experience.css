@@ -354,18 +354,32 @@
 body{overflow-x:clip}
 
 
-/* Compact editorial closing: one clear message and one direct contact action. */
-.contact-section{padding:46px clamp(22px,8vw,112px);background:#e8ebe3}
-.contact-inner{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:36px}
-.contact-copy-block{max-width:590px}
-.contact-eyebrow{display:flex;align-items:center;gap:9px;color:#6d7d79;font-size:12px}
-.contact-eyebrow i{width:7px;height:7px;border-radius:50%;background:#ae8242}
-.contact-section h2{font-size:clamp(34px,4.5vw,54px);line-height:1.2;margin:14px 0 8px;color:#123f57}
-.contact-copy-block p{max-width:500px;margin:0;color:#53676a;font-size:14px;line-height:1.9}
-.contact-link{flex:none;min-width:235px;display:flex;align-items:center;gap:16px;padding:17px 20px;border:1px solid #b6c3bb;border-radius:15px;background:#f8f7f1;color:#123f57;text-decoration:none;transition:transform .25s ease,background .25s ease,border-color .25s ease}
-.contact-link:hover{transform:translateY(-3px);background:#fff;border-color:#ae8242}
-.contact-link-icon{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;background:#123f57;color:#fff;font-size:21px}
+/* Polished contact finale: clear hierarchy, warm motif, and a direct Instagram action. */
+.contact-section{position:relative;isolation:isolate;overflow:hidden;padding:64px clamp(24px,8vw,120px);background:linear-gradient(120deg,#e7ebe2 0%,#eef0e8 54%,#e2e9e1 100%)}
+.contact-inner{position:relative;max-width:1120px;min-height:300px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) 310px;align-items:center;gap:clamp(30px,6vw,88px)}
+.contact-copy-block{position:relative;z-index:1;max-width:660px}
+.contact-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 13px;border:1px solid #c7d0c7;border-radius:99px;background:#f7f6ef99;color:#647873;font-size:12px}
+.contact-eyebrow i{width:7px;height:7px;border-radius:50%;background:#ae8242;box-shadow:0 0 0 4px #ae82421c}
+.contact-section h2{font-size:clamp(38px,5vw,62px);line-height:1.35;letter-spacing:-1px;margin:20px 0 13px;color:#123f57}
+.contact-section h2 em{font-style:normal;color:#ae8242}
+.contact-copy-block p{max-width:530px;margin:0;color:#53676a;font-size:14px;line-height:2}
+.contact-link{position:relative;z-index:2;min-height:108px;display:flex;align-items:center;gap:16px;padding:20px;border:1px solid #c2cbc2;border-radius:20px;background:#f8f7f1e8;color:#123f57;text-decoration:none;box-shadow:0 14px 35px #123f5710;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s,background .35s}
+.contact-link:hover{transform:translateY(-5px);background:#fffdf8;border-color:#ae8242;box-shadow:0 20px 44px #123f571a}
+.contact-link:focus-visible{outline:3px solid #ae8242;outline-offset:4px}
+.contact-link-icon{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:16px;background:#123f57;color:#fff;transition:transform .35s,background .35s}
+.contact-link:hover .contact-link-icon{transform:rotate(-8deg) scale(1.04);background:#ae8242}
 .contact-link-label{display:grid;gap:5px}
-.contact-link-label strong{font-size:15px}
-.contact-link-label small{color:#71807e;font-size:11px}
-@media(max-width:760px){.contact-section{padding:34px 22px}.contact-inner{align-items:stretch;flex-direction:column;gap:19px}.contact-section h2{font-size:36px;margin-top:11px}.contact-copy-block p{font-size:13px}.contact-link{min-width:0;padding:13px 15px}.contact-link-icon{width:38px;height:38px}}
+.contact-link-label small{color:#71807e;font-size:10px}
+.contact-link-label strong{font-size:16px}
+.contact-link-label>span{display:flex;align-items:center;gap:7px;color:#6e7e7a;font-size:11px}
+.contact-link-label>span i{font-style:normal;color:#ae8242;transition:transform .3s}
+.contact-link:hover .contact-link-label>span i{transform:translate(3px,-3px)}
+.contact-orbit{position:absolute;z-index:-1;pointer-events:none;border:1px solid #ae82421c;border-radius:50%}
+.contact-orbit-one{width:390px;height:390px;left:4%;top:50%;transform:translateY(-50%);animation:contact-drift 10s ease-in-out infinite}
+.contact-orbit-two{width:285px;height:285px;left:8%;top:50%;transform:translateY(-50%);border-color:#123f5710;animation:contact-drift 8s ease-in-out infinite reverse}
+.contact-spark{position:absolute;left:7%;top:20%;color:#ae8242;font-size:22px;animation:contact-twinkle 3s ease-in-out infinite}
+@keyframes contact-drift{50%{translate:0 -8px;rotate:4deg}}
+@keyframes contact-twinkle{50%{opacity:.45;transform:rotate(45deg) scale(.86)}}
+@media(max-width:760px){.contact-section{padding:46px 22px}.contact-inner{min-height:0;grid-template-columns:1fr;gap:25px}.contact-section h2{font-size:clamp(36px,9vw,48px);margin:17px 0 9px}.contact-copy-block p{font-size:13px;line-height:1.9}.contact-link{min-height:88px;padding:15px 16px;border-radius:16px}.contact-link-icon{width:46px;height:46px;border-radius:14px}.contact-orbit-one{width:270px;height:270px;left:-14%;top:33%}.contact-orbit-two{width:195px;height:195px;left:-4%;top:33%}.contact-spark{left:auto;right:7%;top:18%}}
+@media(prefers-reduced-motion:reduce){.contact-link,.contact-link-icon,.contact-link-label>span i,.contact-orbit,.contact-spark{animation:none!important;transition:none!important}}
+
